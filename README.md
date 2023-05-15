@@ -1,10 +1,10 @@
 # WEBSITE
 
 ## Table of contents
-  - [Installation]()
-  - [Use Cases]()
-  - [About]()
-  - [Images]()
+  - [Installation](https://github.com/VaganovAlexanderMih/Website_Python/tree/dev#installation)
+  - [Use Cases](https://github.com/VaganovAlexanderMih/Website_Python/tree/dev#use-cases)
+  - [About](https://github.com/VaganovAlexanderMih/Website_Python/tree/dev#about)
+  - [Images](https://github.com/VaganovAlexanderMih/Website_Python/tree/dev#images)
 
 
 ## Installation
