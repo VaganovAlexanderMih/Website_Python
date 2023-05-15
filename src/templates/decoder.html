@@ -1,0 +1,40 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+    %}
+    <h1 align="center">Files</h1>
+    <ul class="list-group list-group-flush" id="files">
+      {% for file in user.files %}
+      <li class="list-group-item">
+        {{ file.date }}
+        <a href="~Desktop/Website/src/files/3/SOURCE.txt" download="proposed_file_name">Download</a>
+        <button type="button" class="close" onClick="deleteFile({{ file.id }})">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </li>
+      {% endfor %}
+    </ul>
+    <form method="POST">
+      <textarea name="file" id="file" class="form-control"></textarea>
+      <br />
+      <div align="left">
+          <select name="cipher" id="cipher">
+              <option value="Caesar">Caesar</option>
+              <option value="Vigenere">Vigenere</option>
+              <option value="Vernam">Vernam</option>
+              <option value="Columnar">Columnar</option>
+              <option value="Image">Image</option>
+          </select>
+      </div>
+      <div align="left">
+          <input
+          type="text"
+          class="form-control"
+          id="offset"
+          name="offset"
+          placeholder="Enter offset, please"
+        />
+      </div>
+      <div align="center">
+        <button type="submit" class="btn btn-primary">Encrypt!</button>
+      </div>
+    </form>
+    {% endblock %}
