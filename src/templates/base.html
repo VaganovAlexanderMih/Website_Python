@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      crossorigin="anonymous"
+    />
+
+    <title>{% block title %}Home{% endblock %}</title>
+  </head>
+    <body>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <style>
+         :root {
+          --primColor: #dcdcdc;
+          --secoColor: #555555;
+          --cornerRad: 4px;
+        }
+        body {
+          font-family: Arial, Helvetica, sans-serif;
+          font-size: 20px;
+        }
+        details {
+          margin: 40px;
+        }
+        summary {
+          writing-mode: vertical-lr;
+          text-align: center;
+          border: 2px solid var(--secoColor);
+          border-radius: var(--cornerRad);
+          color: var(--secoColor);
+          cursor: pointer;
+          user-select: none;
+          outline: none;
+          transition: transform 200ms ease-in-out 0s;
+        }
+        summary::before,
+        summary::after {
+          position: static;
+          top: 0;
+          left: 0;
+        }
+        summary::before {
+          content: "";
+        }
+        summary::after {
+          content: "III";
+          letter-spacing: 1px;
+        }
+        summary:hover {
+          transform: scale(1.1);
+        }
+        summary::marker {
+          font-size: 0;
+        }
+        summary::-webkit-details-marker {
+          display: none;
+        }
+        details[open] .menu {
+          animation-name: menuAnim;
+        }
+        details[open] summary::before {
+          content: "X";
+        }
+        details[open] summary::after {
+          content: "";
+        }
+        .menu {
+          height: 0;
+          width: fit-content;
+          border-radius: var(--cornerRad);
+          margin-top: 8px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          overflow: hidden;
+          animation: closeMenu 300ms ease-in-out forwards;
+        }
+        .menu a {
+          padding: 24px 24px;
+          margin: 0 16px;
+          color: var(--secoColor);
+          border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+          text-decoration: none;
+          text-align: center;
+          transition: filter 200ms linear 0s;
+        }
+        .menu a:nth-of-type(1) {
+          padding-top: 24px;
+        }
+        .menu a:nth-last-of-type(1) {
+          border-bottom: none;
+        }
+        .menu a:hover {
+          filter: brightness(200%);
+        }
+
+        details[open]::before {
+          animation: fadeMe 300ms linear forwards;
+        }
+        @keyframes menuAnim {
+          0% {
+            height: 0;
+          }
+          100% {
+            height: 312px;
+          }
+        }
+        @keyframes fadeMe {
+          0% {
+            opacity: 0.4;
+          }
+          100% {
+            opacity: 0;
+          }
+        }
+
+      </style>
+  <body>
+
+    <details>
+      <summary></summary>
+      <nav class="menu">
+        <a href="/">Home</a>
+        <a href="/encryption">Encryption</a>
+        <a href="/decryption">Decryption</a>
+        <a href="/logout">Logout</a>
+      </nav>
+    </details>
+
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %} {% if category ==
+    'error' %}
+    <div class="alert alert-danger alter-dismissable fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alter-dismissable fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %} {% endfor %} {% endif %} {% endwith %}
+
+    <div class="container">{% block content %} {% endblock %}</div>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+
+    {% block javascript %}
+        <script type="text/javascript">
+            function deleteFile(file_id) {
+                fetch("/delete-file", {
+                    method: "POST",
+                    body: JSON.stringify({ file_id: file_id }),
+                    }).then((_res) => {
+                    window.location.href = "/encryption";
+                });
+            }
+        </script>
+        <script type="text/javascript">
+            function get_url() {
+                return window.location.href;
+            }
+        </script>
+    <script type="text/php">
+        <?php
+        $file = $_FILES['file'];
+        move_uploaded_file($file['tmp_name'], 'uploads/' . $file['name']);?>
+    </script>
+    <script type = 'text/javascript'>
+    function read_file() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+          var e = document.getElementById('info');
+          e.innerHTML = xhttp.responseText;
+        }
+      };
+      xhttp.open('GET', 'info.txt', true);
+      xhttp.send();
+    }
+    read_file();
+    </script>
+    {% endblock %}
+  </body>
+</html>
